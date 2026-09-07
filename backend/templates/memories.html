@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ site_title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="petals" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="hero-eyebrow">for {{ recipient_name }}</p>
+    <h1 class="hero-title">{{ site_title }}</h1>
+    <p class="hero-message">{{ opening_message }}</p>
+  </header>
+
+  <main class="timeline" aria-label="Our memories together">
+    <div class="timeline-line" aria-hidden="true"></div>
+
+    {% for memory in memories %}
+    <section class="memory {{ 'memory-right' if loop.index0 % 2 else 'memory-left' }}">
+      <div class="memory-marker" aria-hidden="true">{{ loop.index }}</div>
+      <div class="memory-card">
+        <p class="memory-date">{{ memory.date }}</p>
+        <h2 class="memory-title">{{ memory.title }}</h2>
+        {% if memory.image %}
+        <div class="memory-photo">
+          <img src="{{ url_for('static', filename='images/' ~ memory.image) }}"
+               alt="{{ memory.title }}"
+               onerror="this.parentElement.classList.add('memory-photo--empty'); this.remove();" />
+        </div>
+        {% else %}
+        <div class="memory-photo memory-photo--empty"></div>
+        {% endif %}
+        <p class="memory-message">{{ memory.message }}</p>
+      </div>
+    </section>
+    {% endfor %}
+  </main>
+
+  {% if final_photo %}
+  <section class="finale">
+    <div class="finale-frame">
+      <img src="{{ url_for('static', filename='images/' ~ final_photo) }}" alt="{{ final_title }}" />
+    </div>
+    <h2 class="finale-title">{{ final_title }}</h2>
+    <p class="finale-message">{{ final_message }}</p>
+  </section>
+  {% endif %}
+
+  <footer class="closing">
+    <p class="closing-message">{{ closing_message }}</p>
+    <p class="closing-signature">— {{ sender_name }}</p>
+    <button id="celebrate-btn" class="celebrate-btn" type="button">celebrate 🎉</button>
+    <a class="logout-link" href="{{ url_for('logout') }}">close</a>
+  </footer>
+
+  <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

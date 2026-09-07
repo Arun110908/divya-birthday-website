@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Divya</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body class="login-body">
+  <div class="petals" aria-hidden="true"></div>
+
+  <main class="login-card">
+    <p class="login-eyebrow">a little something for</p>
+    <h1 class="login-name">Divya</h1>
+
+    <form method="POST" class="login-form">
+      <label for="password" class="login-label">This one's just for you</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Enter the password"
+        autocomplete="off"
+        autofocus
+      />
+      <button type="submit">Open it</button>
+      {% if error %}
+        <p class="login-error">{{ error }}</p>
+      {% endif %}
+    </form>
+  </main>
+</body>
+</html>
